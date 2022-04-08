@@ -4,6 +4,11 @@
     <p ref="p" >My name is {{ name }} and my age is {{ age }}</p>
     <!-- Click the button to fire up handleClick function -->
     <button @click="handleClick">click me</button>
+    <!-- increase age variable by one on click -->
+    <button @click="age++">add 1 to age</button>
+    <!-- no need to use name.value as it is in refs below -->
+    <!-- Type to change a name value  -->
+    <input type="text" v-model="name">
   </div>
 </template>
 
