@@ -1,20 +1,28 @@
 <template>
   <div class="home">
     Home
-    <p>My name is {{ name }} and my age is {{ age }}</p>
+    <p ref="p" >My name is {{ name }} and my age is {{ age }}</p>
     <!-- Click the button to fire up handleClick function -->
     <button @click="handleClick">click me</button>
   </div>
 </template>
 
 <script>
+// in composition API we import refs from Vue, it is different in options API
+// Composition API is rarelu used for manipulating DOM content, it can be done differently. But composition API refs are useful to make values reactive
+import { ref } from 'vue'
 // Component object
 export default {
   name: 'Home',
   // Composition API
   // Order of running : setup, created, mounted
   setup() {
-  console.log('setup')
+  console.log(this)
+//  p as paragraph
+// below is referenced to paragraph tag <p ref="p" >My name is {{ name }} and my age is {{ age }}</p>
+// Value property is null
+// We have not returned it
+  const p = ref(null) 
   // We can run inside any kind of JS
   // we can grab data from somewhere or create a computed property
 
@@ -25,28 +33,19 @@ export default {
 
 // we can also create functions
 const handleClick = () => {
-console.log('you clicked me')
+  // log out p i.e paragraph tag
+  // in console we see a ref object
+  // _value: p - it is an actual DOM reference
+  // also output a p value, a template element <p>My name is mario and my age is 30</p>
+console.log(p, p.value);
+// Add CSS class "test" to that paragraph
+p.value.classList.add('test');
+// Change text content on "click me"
+p.value.textContent = 'hello, ninjas';
 } 
-  // to use the above vars in a template at the top of our component
-  //  return { name: name, age: age }
-  // OR
-  // return values including a function as the third parameter
-  return { name, age, handleClick }
+//  p for refs
+  return { name, age, handleClick, p }
    } 
-  //  data() is different from the above as age: 40 is reactive, vars are not
-  //  data() {
-  //    return {
-  // reactive value reflected in a component's template right away
-  //      age: 40
-  //    }
-  //  }
-  // created hook
-  // created() {
-  // console.log('created')
-  // },
-  // mounted hook
-  // mounted() {
-  // console.log('mounted')
-  // }
+  
 }
 </script>
