@@ -1,53 +1,46 @@
 <template>
   <div class="home">
-    Home
-    <p ref="p" >My name is {{ name }} and my age is {{ age }}</p>
-    <!-- Click the button to fire up handleClick function -->
-    <button @click="handleClick">click me</button>
-    <!-- increase age variable by one on click -->
-    <button @click="age++">add 1 to age</button>
-    <!-- no need to use name.value as it is in refs below -->
-    <!-- Type to change a name value  -->
-    <input type="text" v-model="name">
-  </div>
+    <h1>Home</h1>
+    <h2>Refs</h2>
+    <p>{{ ninjaOne.name }} - {{ ninjaOne.age }}</p>
+    <button @click="updateNinjaOne">Update ninja one</button>
+    <h2>Reactive</h2>
+    <p>{{ ninjaTwo.name }} - {{ ninjaTwo.age }} - {{ nameTwo }}</p>
+    <button @click="updateNinjaTwo">Update ninja two</button>
+   </div>
 </template>
 
 <script>
 // Composition API refs are useful to make values reactive
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 // Component object
 export default {
   name: 'Home',
-  // Composition API
-  // Order of running : setup, created, mounted
   setup() {
-// Value property is null
-// We have not returned it
-  // const p = ref(null) 
+    // we can use an object as a value of refs
+      const ninjaOne = ref({ name: 'mario', age: 30})
 
-// Be default the below vars are not reactive so if we change 'mario' to 'luigi' down below, nothing changes, it won't change paragraph content in a template
-// But if we surround them with ref(), there are reactive
-// const means ref is constant but values inside refs can change, these are reactive values
-const name = ref('mario')
-const age = ref(30)
+// Use reactive , not ref - note: refs are better
+const ninjaTwo = reactive({ name: 'luigi', age: 35})
+// We can't use primitive values inside reactive
+// refs - we can
+const nameOne = ref('mario');
+// reactive - we can't as 'luigi' is a primitive value
+// we can't update it
+const nameTwo = reactive('luigi')
 
-// we can also create functions
-const handleClick = () => {
-  // Update values of the refs reactively
-  name.value = 'luigi'
-  age.value = 33
-} 
-//  p for refs
-  return { name, age, handleClick }
-   }, 
-   
-  //Options API the date is reactive by default
-  
-  data() {
-    return {
-      score: 5
+const updateNinjaOne = () => {
+        ninjaOne.value.age = 40;
+      }
+      // To update reactive
+      const updateNinjaTwo = () => {
+    
+    // No need to use .value with reactive
+    // We access the property directly on it
+    ninjaTwo.age = 45
+    
     }
-  }
-  
+      return { ninjaOne, updateNinjaOne, ninjaTwo, updateNinjaTwo, nameTwo}
+   } 
 }
 </script>
