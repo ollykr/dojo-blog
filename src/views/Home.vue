@@ -13,7 +13,7 @@
 <script>
 // Composition API refs are useful to make values reactive
 // the pattern of importing only the features we need
-import { computed, ref } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 // Component object
 export default {
   name: 'Home',
@@ -26,7 +26,15 @@ export default {
 const search = ref('')
 
 const names = ref(['mario','yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
-
+// watch for search updates and fire some code based on the changes
+watch(search, () => {
+console.log('watch function ran')
+})
+// runs initially when a component ran first (before typing anything), or with 'search.value' watches typed values
+// Used more often than just watch() as we need often to get a data from a datalist, perhaps that rellies on resource id, if the id changes we need to re-run the resource
+watchEffect(()=> {
+  console.log('watchEffect function ran', search.value)
+})
 // Return a computed value based on the updated search
 const matchingNames = computed(() => {
   // return computed value (of the ref())
