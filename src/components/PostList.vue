@@ -11,14 +11,17 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, onUpdated } from 'vue'
 import SinglePost from './SinglePost.vue'
 export default {
 // accept posts as a prop
 props: ['posts'],
 components: { SinglePost },
 setup(props) {
-    // access the posts directly
-    console.log(props.posts)
+// onmounted hook
+onMounted(()=> console.log("component mounted"))
+onUnmounted(()=> console.log("component unmounted"))
+onUpdated(() => console.log("component updated"))
 }
 }
 </script>
